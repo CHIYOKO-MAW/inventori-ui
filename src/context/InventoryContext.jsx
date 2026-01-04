@@ -9,10 +9,14 @@ export function InventoryProvider({ children }) {
   const [suppliers, setSuppliers] = useState([]);
 
   useEffect(() => {
+    if (!supabase) return;
     fetchProducts();
     fetchTransaksi();
     fetchSuppliers();
   }, []);
+
+
+
 
   async function fetchProducts() {
     const { data, error } = await supabase.from("products").select("*");
