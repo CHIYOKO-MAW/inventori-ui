@@ -1,6 +1,13 @@
-import { Package, ArrowDownCircle, ArrowUpCircle, AlertTriangle } from "lucide-react";
+import {
+  Package,
+  ArrowDownCircle,
+  ArrowUpCircle,
+  AlertTriangle,
+} from "lucide-react";
+
 import StatCard from "../components/ui/StatCard";
 import Card from "../components/ui/Card";
+import StockByCategoryChart from "../components/charts/StockByCategoryChart";
 
 export default function Dashboard() {
   return (
@@ -8,49 +15,35 @@ export default function Dashboard() {
       {/* Header */}
       <div>
         <h1>Dashboard</h1>
-        <p>Ringkasan kondisi inventori material.</p>
+        <p>Monitoring stok dan aktivitas inventori material.</p>
       </div>
 
-      {/* Stat Cards */}
+      {/* Stat */}
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard
-          label="Total Barang"
-          value="128"
-          icon={Package}
-          color="from-slate-700 to-slate-900"
-        />
-        <StatCard
-          label="Barang Masuk"
-          value="32"
-          icon={ArrowDownCircle}
-          color="from-emerald-500 to-emerald-600"
-        />
-        <StatCard
-          label="Barang Keluar"
-          value="21"
-          icon={ArrowUpCircle}
-          color="from-blue-500 to-blue-600"
-        />
-        <StatCard
-          label="Stok Menipis"
-          value="5"
-          icon={AlertTriangle}
-          color="from-amber-500 to-orange-500"
-        />
+        <StatCard label="Total Barang" value="128" icon={Package} />
+        <StatCard label="Barang Masuk" value="32" icon={ArrowDownCircle} />
+        <StatCard label="Barang Keluar" value="21" icon={ArrowUpCircle} />
+        <StatCard label="Stok Kritis" value="5" icon={AlertTriangle} />
       </div>
 
-      {/* Section bawah */}
+      {/* Chart */}
+      <Card title="Distribusi Stok per Kategori">
+        <StockByCategoryChart />
+      </Card>
+
+      {/* Insight bawah */}
       <div className="grid gap-6 lg:grid-cols-2">
         <Card title="Peringatan Stok">
-          <div className="rounded-lg border border-dashed border-slate-300 p-6 text-center text-slate-500">
-            Belum ada peringatan stok kritis.
+          <div className="rounded-lg bg-amber-50 p-4 text-sm text-amber-800">
+            ⚠️ Terdapat 5 item dengan stok di bawah batas minimum.
           </div>
         </Card>
 
-        <Card title="Aktivitas Terakhir">
-          <div className="rounded-lg border border-dashed border-slate-300 p-6 text-center text-slate-500">
-            Belum ada transaksi terbaru.
-          </div>
+        <Card title="Insight Sistem">
+          <p className="text-sm text-slate-600">
+            Kategori <b>Semen</b> memiliki jumlah stok tertinggi dan perlu
+            pengawasan distribusi agar tidak terjadi penumpukan.
+          </p>
         </Card>
       </div>
     </div>

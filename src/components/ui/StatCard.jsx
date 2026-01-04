@@ -1,14 +1,8 @@
-export default function StatCard({ label, value, icon: Icon, color }) {
+export default function StatCard({ label, value, icon: Icon }) {
   return (
-    <div className="relative overflow-hidden rounded-xl border border-slate-200 bg-white p-5">
-      <div
-        className={`absolute inset-0 opacity-5 bg-gradient-to-br ${color}`}
-      />
-
-      <div className="relative flex items-center gap-4">
-        <div
-          className={`flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br ${color} text-white`}
-        >
+    <div className="rounded-xl border border-slate-200 bg-white p-5">
+      <div className="flex items-center gap-4">
+        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-100 text-amber-600">
           <Icon className="h-5 w-5" />
         </div>
 
