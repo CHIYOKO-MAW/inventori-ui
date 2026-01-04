@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import AdminLayout from "./layouts/AdminLayout";
 
 import Dashboard from "./pages/Dashboard";
@@ -10,17 +10,15 @@ import Laporan from "./pages/Laporan";
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<AdminLayout />}>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/barang" element={<Products />} />
-          <Route path="/barang-masuk" element={<TransaksiMasuk />} />
-          <Route path="/barang-keluar" element={<TransaksiKeluar />} />
-          <Route path="/supplier" element={<Suppliers />} />
-          <Route path="/laporan" element={<Laporan />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route element={<AdminLayout />}>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/barang" element={<Products />} />
+        <Route path="/barang-masuk" element={<TransaksiMasuk />} />
+        <Route path="/barang-keluar" element={<TransaksiKeluar />} />
+        <Route path="/supplier" element={<Suppliers />} />
+        <Route path="/laporan" element={<Laporan />} />
+      </Route>
+    </Routes>
   );
 }
