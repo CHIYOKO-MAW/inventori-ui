@@ -1,8 +1,15 @@
-export default function Card({ title, value }) {
+export default function Card({ title, children, className = "" }) {
   return (
-    <div className="bg-white rounded-lg shadow p-4">
-      <p className="text-sm text-gray-500">{title}</p>
-      <p className="text-2xl font-semibold mt-1">{value}</p>
+    <div
+      className={`rounded-xl border border-slate-200 bg-white shadow-sm
+      hover:shadow-md transition ${className}`}
+    >
+      {title && (
+        <div className="px-5 py-4 border-b border-slate-100">
+          <h3 className="text-sm font-semibold text-slate-800">{title}</h3>
+        </div>
+      )}
+      <div className="p-5">{children}</div>
     </div>
-  )
+  );
 }

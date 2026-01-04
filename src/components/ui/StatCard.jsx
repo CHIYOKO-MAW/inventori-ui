@@ -1,24 +1,22 @@
-import { motion } from "framer-motion"
-
-export default function StatCard({ title, value }) {
+export default function StatCard({ label, value, icon: Icon, color }) {
   return (
-    <motion.div
-      whileHover={{ y: -6 }}
-      transition={{ type: "spring", stiffness: 240 }}
-      className="
-        relative overflow-hidden
-        bg-panel dark:bg-darkPanel
-        border border-border dark:border-darkBorder
-        rounded-xl p-6 shadow-soft
-      "
-    >
-      {/* subtle gradient */}
-      <div className="absolute inset-0 bg-soft-gradient pointer-events-none" />
+    <div className="relative overflow-hidden rounded-xl border border-slate-200 bg-white p-5">
+      <div
+        className={`absolute inset-0 opacity-5 bg-gradient-to-br ${color}`}
+      />
 
-      <div className="relative">
-        <p className="text-sm text-muted">{title}</p>
-        <p className="text-3xl font-semibold mt-2">{value}</p>
+      <div className="relative flex items-center gap-4">
+        <div
+          className={`flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br ${color} text-white`}
+        >
+          <Icon className="h-5 w-5" />
+        </div>
+
+        <div>
+          <p className="text-xs font-medium text-slate-500">{label}</p>
+          <p className="text-xl font-semibold text-slate-900">{value}</p>
+        </div>
       </div>
-    </motion.div>
-  )
+    </div>
+  );
 }
