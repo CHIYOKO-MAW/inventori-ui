@@ -1,23 +1,16 @@
-import Sidebar from "../components/layout/Sidebar"
-import Topbar from "../components/layout/Topbar"
-import PageWrapper from "../components/layout/PageWrapper"
+import { Outlet } from "react-router-dom";
+import Sidebar from "../components/Sidebar";
 
-export default function AdminLayout({ children }) {
+export default function AdminLayout() {
   return (
-    <div className="flex min-h-screen bg-surface dark:bg-darkSurface">
-      {/* SIDEBAR */}
-      <aside className="hidden md:block w-64 shrink-0">
-        <Sidebar />
-      </aside>
+    <div className="flex min-h-screen bg-slate-50">
+      <Sidebar />
 
-      {/* CONTENT */}
-      <div className="flex-1 flex flex-col min-w-0">
-        <Topbar />
-
-        <main className="flex-1 py-6 text-gray-900 dark:text-gray-100">
-          <PageWrapper>{children}</PageWrapper>
-        </main>
-      </div>
+      <main className="flex-1">
+        <div className="px-6 py-6 lg:px-10">
+          <Outlet />
+        </div>
+      </main>
     </div>
-  )
+  );
 }
