@@ -7,6 +7,21 @@
 @tailwind utilities;
 
 @layer base {
+  h1 {
+    @apply text-xl font-semibold;
+  }
+
+  h2 {
+    @apply text-lg font-semibold;
+  }
+
+  p {
+    @apply text-sm text-gray-700 dark:text-gray-300;
+  }
+}
+
+
+@layer base {
   body {
     @apply font-sans text-gray-800 bg-gray-100;
   }
