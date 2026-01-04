@@ -1,62 +1,126 @@
-import TransaksiChart from "../components/Charts/TransaksiChart";
-import StokKategoriChart from "../components/charts/StokKategoriChart";
-import StatCard from "../components/ui/StatCard";
-import EmptyState from "../components/ui/EmptyState";
-import { useInventory } from "../context/InventoryContext";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import {
+  Package,
+  ArrowDownCircle,
+  ArrowUpCircle,
+  AlertTriangle,
+} from "lucide-react";
+
+const statCards = [
+  {
+    title: "Total Barang",
+    value: 128,
+    icon: Package,
+    bg: "bg-slate-100",
+  },
+  {
+    title: "Barang Masuk",
+    value: 32,
+    icon: ArrowDownCircle,
+    bg: "bg-emerald-50",
+  },
+  {
+    title: "Barang Keluar",
+    value: 21,
+    icon: ArrowUpCircle,
+    bg: "bg-blue-50",
+  },
+  {
+    title: "Stok Menipis",
+    value: 5,
+    icon: AlertTriangle,
+    bg: "bg-yellow-50",
+  },
+];
+
+const stokKategori = [
+  { name: "Semen", stok: 420 },
+  { name: "Pasir", stok: 300 },
+  { name: "Batu Bata", stok: 260 },
+  { name: "Besi", stok: 180 },
+  { name: "Cat", stok: 140 },
+];
 
 export default function Dashboard() {
-  const { products, transaksi } = useInventory();
-
-  const totalStok = products.reduce((a, b) => a + b.stok, 0);
-  const totalProduk = products.length;
-  const transaksiMasuk = transaksi.filter(t => t.jenis === "masuk").length;
-  const transaksiKeluar = transaksi.filter(t => t.jenis === "keluar").length;
-
-  const transaksiChartData = [
-    { bulan: "Jan", masuk: 120, keluar: 80 },
-    { bulan: "Feb", masuk: 90, keluar: 70 },
-    { bulan: "Mar", masuk: 150, keluar: 110 },
-  ];
-
-  const stokKategori = products.reduce((acc, p) => {
-    const found = acc.find(a => a.kategori === p.kategori);
-    if (found) found.stok += p.stok;
-    else acc.push({ kategori: p.kategori, stok: p.stok });
-    return acc;
-  }, []);
-
   return (
     <div className="space-y-8">
       {/* HEADER */}
       <div>
         <h1 className="text-2xl font-semibold text-slate-800">
-          Dashboard Inventori
+          Dashboard
         </h1>
         <p className="text-sm text-slate-500">
-          Ringkasan kondisi stok dan aktivitas barang
+          Ringkasan kondisi inventori material
         </p>
       </div>
 
       {/* STAT CARDS */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard title="Total Produk" value={totalProduk} />
-        <StatCard title="Total Stok" value={totalStok} highlight />
-        <StatCard title="Barang Masuk" value={transaksiMasuk} />
-        <StatCard title="Barang Keluar" value={transaksiKeluar} />
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+        {statCards.map((item) => {
+          const Icon = item.icon;
+          return (
+            <div
+              key={item.title}
+              className={`rounded-xl p-5 border border-slate-200 ${item.bg}`}
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-slate-500">
+                    {item.title}
+                  </p>
+                  <p className="text-2xl font-bold text-slate-800">
+                    {item.value}
+                  </p>
+                </div>
+                <div className="p-3 rounded-lg bg-white shadow-sm">
+                  <Icon className="w-5 h-5 text-yellow-500" />
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
 
-      {/* CHART */}
-      {products.length === 0 ? (
-        <EmptyState
-          title="Data inventori belum tersedia"
-          description="Tambahkan data barang untuk melihat visualisasi stok dan transaksi."
-        />
-      ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <TransaksiChart data={transaksiChartData} />
-          <StokKategoriChart data={stokKategori} />
+      {/* MAIN GRID */}
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+        {/* CHART */}
+        <div className="xl:col-span-2 rounded-xl border border-slate-200 bg-white p-6">
+          <h2 className="text-lg font-semibold text-slate-800 mb-4">
+            Stok per Kategori
+          </h2>
+
+          <div className="h-72">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={stokKategori}>
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="stok" fill="#facc15" radius={[6, 6, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         </div>
-      )}
+
+        {/* AKTIVITAS */}
+        <div className="rounded-xl border border-slate-200 bg-white p-6">
+          <h2 className="text-lg font-semibold text-slate-800 mb-4">
+            Aktivitas Terakhir
+          </h2>
+
+          <div className="flex flex-col items-center justify-center h-56 text-center text-slate-400 border border-dashed rounded-lg">
+            <p className="text-sm">
+              Belum ada aktivitas terbaru
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
